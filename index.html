@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Our Love Story</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:black;
+color:white;
+overflow:hidden;
+}
+
+.bar{
+position:fixed;
+width:100%;
+height:9vh;
+background:black;
+z-index:10;
+}
+.top{top:0;}
+.bottom{bottom:0;}
+
+.scene{
+position:absolute;
+width:100%;
+height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+animation:fadeInScene 1.2s;
+}
+
+.active{display:flex;}
+
+@keyframes fadeInScene{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+.movie-text{
+font-size:30px;
+max-width:90%;
+text-shadow:0 0 20px black;
+animation:rise 1.5s;
+}
+
+.tap{
+margin-top:20px;
+opacity:0.7;
+font-size:14px;
+}
+
+@keyframes rise{
+from{opacity:0; transform:translateY(40px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+/* FILM ROLL */
+.film-container{
+width:100%;
+overflow:hidden;
+}
+
+.film-roll{
+display:flex;
+gap:12px;
+width:max-content;
+animation:roll 25s linear infinite;
+}
+
+.film-roll img{
+height:55vh;
+border-radius:12px;
+box-shadow:0 0 20px black;
+}
+
+@keyframes roll{
+from{transform:translateX(0);}
+to{transform:translateX(-50%);}
+}
+
+/* proposal */
+.question{
+font-size:34px;
+text-shadow:0 0 25px black;
+margin-bottom:25px;
+}
+
+button{
+padding:14px 30px;
+margin:10px;
+font-size:20px;
+border:none;
+border-radius:30px;
+cursor:pointer;
+}
+
+.yes{background:#ff2d55;color:white;}
+.no{background:#555;color:white;}
+
+/* ending video */
+.bg-video{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-1;
+}
+
+/* ending text fade-in */
+.ending{
+font-size:36px;
+opacity:0;
+animation:fadeInText 3s forwards;
+text-shadow:0 0 20px black;
+}
+
+@keyframes fadeInText{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bar top"></div>
+<div class="bar bottom"></div>
+
+<audio id="music" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Scene 1 -->
+<div id="scene1" class="scene active">
+<div class="movie-text">
+A story about a boy hopelessly in love...
+</div>
+<div class="tap">Tap anywhere to begin</div>
+</div>
+
+<!-- Scene 2 -->
+<div id="scene2intro" class="scene">
+<div class="movie-text">
+He met someone who made ordinary days magical...
+</div>
+</div>
+
+<!-- Scene 3 -->
+<div id="scene3intro" class="scene">
+<div class="movie-text">
+Moments turned into memories,
+and memories into something unforgettable.
+</div>
+</div>
+
+<!-- Film roll -->
+<div id="filmScene" class="scene">
+<div class="movie-text">Our favorite memories...</div>
+
+<div class="film-container">
+<div class="film-roll">
+
+<img src="photos/1.jpeg">
+<img src="photos/2.jpeg">
+<img src="photos/3.jpeg">
+<img src="photos/4.jpeg">
+<img src="photos/5.jpeg">
+<img src="photos/6.jpeg">
+
+<img src="photos/1.jpeg">
+<img src="photos/2.jpeg">
+<img src="photos/3.jpeg">
+<img src="photos/4.jpeg">
+<img src="photos/5.jpeg">
+<img src="photos/6.jpeg">
+
+</div>
+</div>
+</div>
+
+<!-- Proposal -->
+<div id="questionScene" class="scene">
+<div class="question">
+✨ Will you be my Valentine? ✨
+</div>
+
+<div>
+<button class="yes" onclick="firstYes(event)">YES ❤️</button>
+<button class="no" onclick="goReject1(event)">NO</button>
+</div>
+</div>
+
+<!-- YES scene -->
+<div id="yesScene" class="scene"
+style="background:url('photos/you4.jpeg') center/cover">
+<div class="question">
+She said YES…
+and he instantly became
+the happiest person alive ❤️
+</div>
+</div>
+
+<!-- Reject 1 -->
+<div id="reject1" class="scene"
+style="background:url('photos/you.jpeg') center/cover">
+<div class="question">
+Wait… are you really rejecting me?
+<br><br>
+Will you be my Valentine?
+</div>
+
+<div>
+<button class="yes" onclick="ending(event)">YES ❤️</button>
+<button class="no" onclick="goReject2(event)">NO</button>
+</div>
+</div>
+
+<!-- Reject 2 -->
+<div id="reject2" class="scene"
+style="background:url('photos/you2.jpeg') center/cover">
+<div class="question">
+Last chance…
+Unlimited love & cuddles await 😌
+<br><br>
+Will you be my Valentine?
+</div>
+
+<div>
+<button class="yes" onclick="ending(event)">YES ❤️</button>
+<button class="no" onclick="goReject3(event)">NO</button>
+</div>
+</div>
+
+<!-- Reject 3 -->
+<div id="reject3" class="scene"
+style="background:url('photos/you3.jpeg') center/cover">
+<div class="question">
+Okay okay final chance 😭
+Will you be my Valentine?
+</div>
+
+<div>
+<button class="yes" onclick="ending(event)">YES ❤️</button>
+<button id="runaway" class="no">NO</button>
+</div>
+</div>
+
+<!-- Ending -->
+<div id="ending" class="scene">
+
+<video class="bg-video" autoplay muted loop>
+<source src="ending.mp4" type="video/mp4">
+</video>
+
+<div class="ending">
+Best decision ever ❤️
+</div>
+
+</div>
+
+<script>
+const music=document.getElementById("music");
+
+let scenes=["scene1","scene2intro","scene3intro","filmScene","questionScene"];
+let index=0;
+let started=false;
+
+function showScene(id){
+document.querySelectorAll(".scene")
+.forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+document.body.addEventListener("click",()=>{
+if(!started){
+music.play().catch(()=>{});
+started=true;
+}
+
+if(index<scenes.length-1){
+index++;
+showScene(scenes[index]);
+}
+});
+
+function firstYes(e){
+e.stopPropagation();
+showScene("yesScene");
+setTimeout(()=>showScene("ending"),4000);
+}
+
+function goReject1(e){e.stopPropagation();showScene("reject1");}
+function goReject2(e){e.stopPropagation();showScene("reject2");}
+function goReject3(e){e.stopPropagation();showScene("reject3");}
+
+function ending(e){
+e.stopPropagation();
+showScene("ending");
+}
+
+const runaway=document.getElementById("runaway");
+runaway.addEventListener("mouseover",()=>{
+runaway.style.position="absolute";
+runaway.style.left=Math.random()*80+"%";
+runaway.style.top=Math.random()*80+"%";
+});
+</script>
+
+</body>
+</html>
